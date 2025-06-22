@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Votre demande de prêt a été annulée</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 5px; }
+        .header { background-color: #f8d7da; padding: 10px; text-align: center; border-bottom: 1px solid #f5c6cb; }
+        .content { padding: 20px 0; }
+        .footer { text-align: center; font-size: 0.8em; color: #777; border-top: 1px solid #eee; padding-top: 10px; margin-top: 20px; }
+        strong { color: #dc3545; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Annulation de votre demande de prêt</h2>
+        </div>
+        <div class="content">
+            <p>Cher **{{ loan.applicant.first_name|default:loan.applicant.username }}**,</p>
+
+            <p>Nous confirmons que votre demande de prêt numéro **{{ loan.application_number }}** a été **annulée** par vos soins.</p>
+
+            <p>Vous pouvez soumettre une nouvelle demande de prêt à tout moment si vous le souhaitez.</p>
+        </div>
+        <div class="footer">
+            <p>Cordialement,<br>L'équipe de la plateforme de prêt</p>
+            <p>&copy; {% now "Y" %} Votre Plateforme de Prêt. Tous droits réservés.</p>
+        </div>
+    </div>
+</body>
+</html>

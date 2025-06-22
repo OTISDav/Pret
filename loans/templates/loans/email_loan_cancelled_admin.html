@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Notification : Demande de prêt annulée</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 5px; }
+        .header { background-color: #f8d7da; padding: 10px; text-align: center; border-bottom: 1px solid #f5c6cb; }
+        .content { padding: 20px 0; }
+        .footer { text-align: center; font-size: 0.8em; color: #777; border-top: 1px solid #eee; padding-top: 10px; margin-top: 20px; }
+        strong { color: #dc3545; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Demande de prêt annulée</h2>
+        </div>
+        <div class="content">
+            <p>Cher administrateur,</p>
+
+            <p>La demande de prêt numéro **{{ loan.application_number }}** soumise par **{{ loan.applicant.first_name }} {{ loan.applicant.last_name }} ({{ loan.applicant.email }})** a été **annulée** par le demandeur.</p>
+
+            <p>Détails de la demande :</p>
+            <ul>
+                <li>Numéro de demande : **{{ loan.application_number }}**</li>
+                <li>Demandeur : **{{ loan.applicant.username }}** ({{ loan.applicant.email }})</li>
+                <li>Montant demandé : **{{ loan.amount_requested }} FCFA**</li>
+                <li>Type de prêt : **{{ loan.get_loan_type_display }}**</li>
+                <li>Date de soumission : **{{ loan.date_submitted|date:"d M Y H:i" }}**</li>
+            </ul>
+        </div>
+        <div class="footer">
+            <p>Ceci est une notification automatique de la plateforme de prêt.</p>
+            <p>&copy; {% now "Y" %} Votre Plateforme de Prêt. Tous droits réservés.</p>
+        </div>
+    </div>
+</body>
+</html>
