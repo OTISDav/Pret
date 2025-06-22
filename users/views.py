@@ -19,8 +19,12 @@ from .serializers import (
     PasswordChangeSerializer,
     AdminUserManagementSerializer
 )
-
+from rest_framework_simplejwt.views import TokenObtainPairView
+from .serializers import MyTokenObtainPairSerializer
 # --- Vues d'Authentification ---
+
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer
 
 class UserRegistrationView(generics.CreateAPIView):
     queryset = User.objects.all()

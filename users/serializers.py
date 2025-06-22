@@ -1,8 +1,23 @@
 # users/serializers.py
 from rest_framework import serializers
 from .models import User
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer # Importez ceci
 
 # --- Serializers pour l'Authentification ---
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+
+        # Ajoutez vos informations personnalisées ici
+        token['username'] = user.username
+        token['email'] = user.email # L'email est aussi utile
+        token['role'] = user.role # Ceci est crucial pour la redirection frontend
+        token['first_name'] = user.first_name # Ajout des prénoms et noms
+        token['last_name'] = user.last_name
+
+        return token
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True, style={'input_type': 'password'})

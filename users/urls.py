@@ -6,6 +6,7 @@ from rest_framework_simplejwt.views import (
 )
 from . import views
 
+
 urlpatterns = [
     # Authentification et JWT
     path('register/', views.UserRegistrationView.as_view(), name='register'),

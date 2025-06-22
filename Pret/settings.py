@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'drf_spectacular',
     'django_filters',
+    'corsheaders',
 
     # Mes applications
     'users',
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -48,6 +50,28 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'social_django.middleware.SocialAuthExceptionMiddleware', # Important pour gérer les erreurs de Social Auth
 ]
+
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000", # ou le port de votre frontend React (ex: 5173 pour Vite par défaut)
+    "http://127.0.0.1:3000", # ou le port de votre frontend React
+    "http://localhost:5173", # Ajoutez celui-ci si Vite utilise le port 5173
+    "http://127.0.0.1:5173", # Ajoutez celui-ci si Vite utilise le port 5173
+]
+
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "accept-encoding",
+    "authorization", # TRÈS IMPORTANT pour les tokens JWT
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+]
+
+CORS_ALLOW_CREDENTIALS = True # Si vous avez besoin d'envoyer des cookies ou des en-têtes d'autorisation complexes
 
 ROOT_URLCONF = 'Pret.urls'
 
@@ -147,6 +171,8 @@ REST_FRAMEWORK = {
         'rest_framework.filters.OrderingFilter',
     ),
 }
+
+
 
 
 # --- Simple JWT Settings ---
