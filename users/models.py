@@ -1,4 +1,3 @@
-# users/models.py
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
@@ -31,7 +30,6 @@ class User(AbstractUser):
 
     email = models.EmailField(unique=True, verbose_name="Adresse e-mail")
 
-    # Champ pour la vérification de l'email
     is_verified = models.BooleanField(default=False, verbose_name="Email vérifié")
 
 

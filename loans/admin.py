@@ -7,7 +7,7 @@ class LoanApplicationAdmin(admin.ModelAdmin):
     list_display = ('application_number', 'applicant', 'amount_requested', 'status', 'date_submitted', 'approved_by', 'amount_approved')
     list_filter = ('status', 'loan_type', 'date_submitted', 'date_approved_rejected')
     search_fields = ('application_number', 'applicant__username', 'applicant__email', 'purpose', 'admin_comments')
-    raw_id_fields = ('applicant', 'approved_by') # Pour une meilleure UX si beaucoup d'utilisateurs
+    raw_id_fields = ('applicant', 'approved_by')
     readonly_fields = ('application_number', 'date_submitted', 'date_updated', 'date_approved_rejected')
     fieldsets = (
         (None, {'fields': ('applicant', 'application_number', 'status')}),

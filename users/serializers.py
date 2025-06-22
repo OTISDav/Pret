@@ -1,20 +1,17 @@
-# users/serializers.py
 from rest_framework import serializers
 from .models import User
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer # Importez ceci
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
-# --- Serializers pour l'Authentification ---
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
 
-        # Ajoutez vos informations personnalisées ici
         token['username'] = user.username
-        token['email'] = user.email # L'email est aussi utile
-        token['role'] = user.role # Ceci est crucial pour la redirection frontend
-        token['first_name'] = user.first_name # Ajout des prénoms et noms
+        token['email'] = user.email
+        token['role'] = user.role
+        token['first_name'] = user.first_name
         token['last_name'] = user.last_name
 
         return token
@@ -38,12 +35,11 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         if data['password'] != data['password2']:
             raise serializers.ValidationError({"password": "Les deux mots de passe ne correspondent pas."})
         if 'role' in data and data['role'] != 'fonctionnaire':
-            data['role'] = 'fonctionnaire' # Force le rôle à fonctionnaire à l'inscription normale
+            data['role'] = 'fonctionnaire'
         return data
 
     def create(self, validated_data):
         validated_data.pop('password2')
-        # À l'inscription normale, le compte n'est pas actif ni vérifié par défaut
         user = User.objects.create_user(
             username=validated_data['username'],
             email=validated_data['email'],
@@ -53,8 +49,8 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             phone_number=validated_data.get('phone_number'),
             cin_number=validated_data.get('cin_number'),
             role=validated_data.get('role', 'fonctionnaire'),
-            is_active=False, # Inactif jusqu'à vérification email
-            is_verified=False # Non vérifié jusqu'à activation
+            is_active=False,
+            is_verified=False
         )
         return user
 
@@ -70,8 +66,6 @@ class UserLoginSerializer(serializers.Serializer):
             raise serializers.ValidationError("Le nom d'utilisateur/email et le mot de passe sont requis.")
 
         return data
-
-# --- Serializers pour le Profil Utilisateur ---
 
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
@@ -89,7 +83,6 @@ class PasswordChangeSerializer(serializers.Serializer):
             raise serializers.ValidationError({"new_password": "Les nouveaux mots de passe ne correspondent pas."})
         return data
 
-# --- Serializers pour la Gestion Admin des Utilisateurs ---
 
 class AdminUserManagementSerializer(serializers.ModelSerializer):
     class Meta:
