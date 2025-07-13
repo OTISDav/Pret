@@ -1,13 +1,12 @@
 from django.urls import path
-from . import views
+from .views import (
+    DemandePretCreateView, MesDemandesView, DemandePretDetailView,
+    ChangerStatutView
+)
 
 urlpatterns = [
-    path('', views.LoanApplicationListCreateView.as_view(), name='loan_application_list_create'),
-    path('<int:pk>/', views.LoanApplicationDetailView.as_view(), name='loan_application_detail'),
-    path('<int:pk>/cancel/', views.LoanApplicationCancelView.as_view(), name='loan_application_cancel'),
-
-
-
-    path('admin/', views.AdminLoanApplicationListView.as_view(), name='admin_loan_application_list'),
-    path('admin/<int:pk>/', views.AdminLoanApplicationDetailView.as_view(), name='admin_loan_application_detail'),
+    path('soumettre/', DemandePretCreateView.as_view(), name='soumettre-pret'),
+    path('mes-demandes/', MesDemandesView.as_view(), name='mes-demandes'),
+    path('detail/<int:pk>/', DemandePretDetailView.as_view(), name='detail-pret'),
+    path('changer-statut/<int:pk>/', ChangerStatutView.as_view(), name='changer-statut'),
 ]

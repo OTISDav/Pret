@@ -9,6 +9,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/users/', include('users.urls')), # Inclut les URLs de l'app users
     path('api/loans/', include('loans.urls')),
+    path('api/pieces/', include('pieces.urls')),
+    path('api/messagerie/', include('messagerie.urls')),
+
 
     path('auth/', include('drf_social_oauth2.urls', namespace='drf')),
 

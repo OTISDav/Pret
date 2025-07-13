@@ -27,6 +27,9 @@ INSTALLED_APPS = [
     'users',
     'loans', # Nous allons la développer après
 
+    'pieces',
+    'messagerie',
+
     # Django REST Framework
     'rest_framework',
     'rest_framework_simplejwt', # Pour JWT
