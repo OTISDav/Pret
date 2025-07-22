@@ -1,5 +1,5 @@
 from rest_framework import generics, permissions
-from rest_framework.response import Response
+
 from .models import DemandePret, HistoriqueStatut
 from .serializers import (
     DemandePretSerializer, DemandePretCreateSerializer,
@@ -20,7 +20,10 @@ class MesDemandesView(generics.ListAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return DemandePret.objects.filter(fonctionnaire=self.request.user)
+        user = self.request.user
+        if user.is_staff:  # ou user.role == 'administrateur'
+            return DemandePret.objects.all()
+        return DemandePret.objects.filter(fonctionnaire=user)
 
 # ✅ Détail d’une demande
 class DemandePretDetailView(generics.RetrieveAPIView):
